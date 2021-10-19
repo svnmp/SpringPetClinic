@@ -1,16 +1,24 @@
 pipeline{
-    agent{label 'master'}
-    tools{maven 'M3'}
+    agent{
+        label 'master'
+    }
+    tools{
+        maven 'M3'   
+    }
     stages{
         stage('Checkout'){
             steps{
+                echo 'Checkout stage started'
                 git branch: 'main', url: 'https://github.com/svnmp/SpringPetClinic.git'
+                echo 'Checkout stage completed'
             }
         }
         stage('Build'){
-            steps{
-                sh 'mvn compile'
-            }
+           steps{
+               echo 'Build stage started'
+               sh 'mvn compile'
+               echo 'Build stage completed'
+           } 
         }
         stage('Test'){
             steps{
@@ -19,12 +27,12 @@ pipeline{
         }
         stage('Package'){
             steps{
-                sh 'mvn package'
+                sh 'mvn -Dmaven.test.failure.ignore=true clean package'
             }
         }
         stage('Deploy'){
             steps{
-                sh 'java -jar /var/lib/jenkins/workspace/PetClinicDeclarativePipeline/target/*.jar'
+                sh 'java -jar C:/Windows/System32/config/systemprofile/AppData/Local/Jenkins/.jenkins/workspace/PetClinicDeclarativePipeline/target/*.jar'
             }
         }
     }
