@@ -3,9 +3,7 @@ pipeline{
         label 'master'
     }
     tools{
-        echo 'Tools Installation started'
         maven 'M3'
-        echo 'Tools Installation completed'
     }
     stages{
         stage('Checkout'){
